@@ -1,0 +1,1 @@
+export default (text: string, int: number, special = 0) => text.length > int ? text.slice(0, int - special) + "..." : text

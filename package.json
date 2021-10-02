@@ -1,0 +1,15 @@
+{
+  "name": "klaus",
+  "version": "1.0.0",
+  "main": "lib/src/index.js",
+  "license": "MIT",
+  "scripts": {
+    "test": "ts-node src/index.ts",
+    "run": "node ."
+  },
+  "dependencies": {
+    "discord.js": "^13.1.0",
+    "dotenv": "^10.0.0",
+    "fs": "^0.0.1-security"
+  }
+}
