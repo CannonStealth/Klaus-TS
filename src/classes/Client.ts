@@ -1,5 +1,5 @@
-import { Client, Collection } from "discord.js";
-import { Command, log } from "@"
+import { Client, Collection, Snowflake } from "discord.js";
+import { Command, log, caps } from "@"
 import { join } from "path"
 import { readdir, lstat } from "fs/promises";
 
@@ -8,17 +8,21 @@ export class ClientClass extends Client {
     public commands: Collection<string, Command>
     public aliases: Collection<string, string>
     public categories: Collection<string, string[]>
-    public dir: string
-    public log: typeof log
+    public readonly dir;
+    public log;
+    public readonly invite;
+    public readonly testServers: Snowflake[];
 
     constructor() {
         super({ intents: 32767 })
 
+        this.testServers = ["741157880211701803"]
         this.dir = __dirname
         this.commands = new Collection()
         this.aliases = new Collection()
         this.categories = new Collection()
         this.log = log
+        this.invite = "https://discord.com/oauth2/authorize?client_id=894282303348547614&scope=applications.commands%20bot&permissions=8589934591"
     }
 
     public async load<T>(path: string, callback?: (file: T) => unknown) {
@@ -47,29 +51,28 @@ export class ClientClass extends Client {
         this.log([{
             name: "Client", 
             value: ["Starting Client"]
+        }, { 
+            name: "Commands",
+            value: []
         }], { start: true })
   
-        await this.load<Command>("../commands", command => {
-            let {
-                category: cmdCategory = "Misc",
-                name,
-                aliases
-            } = command
+        await this.load<Command>("../commands", command => {        
 
-             console.log(command)
+            command.category = caps(command.category)
+            command.name = command.name.toLowerCase()
 
-            const category = this.categories.get(cmdCategory)
-            if (!category || !category.length) this.categories.set(cmdCategory, [name])
-            else category.push(name)
+            const category = this.categories.get(command.category)
+            if (!category) this.categories.set(command.category, [command.name])
+            else category.push(command.name)
 
-            if (aliases && typeof aliases === "string") aliases = [aliases]
 
-            if (aliases && aliases.length) for (const alias of aliases) this.aliases.set(alias, name)
+            this.commands.set(command.name, command)
+             
 
-            this.commands.set(name, command) 
-
-          
-
+            log([{
+                name: "",
+                value: [`Loading command ${command.name}`]
+            }], { justValue: true })
         })
     }
 }

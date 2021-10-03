@@ -1,14 +1,14 @@
 {
   "name": "klaus",
   "version": "1.0.0",
-  "main": "lib/src/index.ts",
+  "main": "lib/index.ts",
   "license": "MIT",
   "_moduleAliases": {
     "@": "./lib/exports"    
   },
   "scripts": {
     "test": "ts-node src/index.ts",
-    "run": "node lib/src/index.js"
+    "run": "node lib/index.js"
   },
   "dependencies": {
     "discord.js": "^13.1.0",

@@ -1,0 +1,1 @@
+export const caps = (text: string) => text.toLowerCase().replace(/\b[a-zA-Z]/g, m => m.toUpperCase())

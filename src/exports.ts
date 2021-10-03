@@ -1,4 +1,6 @@
-export * from "./interfaces/Command"
+export * from "./classes/Command"
 export * from "./utils/logs"
 export * from "./utils/resume"
+export * from "./utils/caps"
 export * from "./classes/Client"
+export * from "./index"
