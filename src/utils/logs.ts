@@ -1,6 +1,7 @@
-import resume from "./resume"
+import "module-alias/register";
+import { resume } from "@";
 
-export default function log(data: Data[], options: Partial<{ start: boolean, end: boolean, justValue: boolean, size: number }> = { start: false, end: false, justValue: false, size: 68 }) {
+export function log(data: Data[], options: Partial<{ start: boolean, end: boolean, justValue: boolean, size: number }> = { start: false, end: false, justValue: false, size: 68 }) {
 
     const { start = false, end = false, justValue = false, size = 68 } = options
 

@@ -1,10 +1,9 @@
 import { Client, Collection } from "discord.js";
-import Command from "../interfaces/Command"
+import { Command, log } from "@"
 import { join } from "path"
 import { readdir, lstat } from "fs/promises";
-import log from "../utils/logs"
 
-export default class extends Client {
+export class ClientClass extends Client {
 
     public commands: Collection<string, Command>
     public aliases: Collection<string, string>
@@ -47,9 +46,8 @@ export default class extends Client {
 
         this.log([{
             name: "Client", 
-            value: []
+            value: ["Starting Client"]
         }], { start: true })
-
   
         await this.load<Command>("../commands", command => {
             let {
@@ -57,6 +55,8 @@ export default class extends Client {
                 name,
                 aliases
             } = command
+
+             console.log(command)
 
             const category = this.categories.get(cmdCategory)
             if (!category || !category.length) this.categories.set(cmdCategory, [name])
@@ -68,7 +68,7 @@ export default class extends Client {
 
             this.commands.set(name, command) 
 
-       
+          
 
         })
     }
