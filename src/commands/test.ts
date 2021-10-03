@@ -5,8 +5,7 @@ export default new Command({
     description: "testing command",
     category: "private",
     test: true,
-    run({ client }) {
-
+    run({ client, interaction }) {
+        interaction.reply("Hello")
     }
 })
-.submit()

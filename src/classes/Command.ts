@@ -23,7 +23,7 @@ export class Command {
           this.options = {
           name: properties.name,
           description: properties.description,
-          defaultPermission: properties.default === false || this.test === true ? false : true,
+          defaultPermission: properties.default === false ? false : true,
           options: properties.options
         }
     }

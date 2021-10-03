@@ -1,5 +1,5 @@
-import { Client, Collection, Snowflake } from "discord.js";
-import { Command, log, caps } from "@"
+import { Client, ClientEvents, Collection, Snowflake } from "discord.js";
+import { Command, log, caps, Event } from "@"
 import { join } from "path"
 import { readdir, lstat } from "fs/promises";
 
@@ -73,6 +73,14 @@ export class ClientClass extends Client {
                 name: "",
                 value: [`Loading command ${command.name}`]
             }], { justValue: true })
+        })
+
+        await this.load<Event<keyof ClientEvents>>("../events", event => {
+            this.log([{
+                name: "Events",
+                value: ["Loading event " + event.name]
+            }])
+            this.on(event.name, event.run.bind(null, this))
         })
     }
 }
